@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import {
   Card,
@@ -19,13 +19,12 @@ export interface ProfileProps {
 }
 
 export default function Profile({ user }: ProfileProps) {
+  return <UserProfile user={user} key={user.id} />
+}
+
+function UserProfile({ user }: ProfileProps) {
   const [title, setTitle] = useState("")
   const [comment, setComment] = useState("")
-
-  useEffect(() => {
-    setTitle("")
-    setComment("")
-  }, [user.id])
 
   console.count("UserProfile rendered")
 
