@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 
@@ -12,16 +12,18 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { getInitials } from "./get-initials"
 
 export default function Page() {
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
 
-  const [fullName, setFullName] = useState("")
-
-  useEffect(() => {
-    setFullName(firstName + " " + lastName)
-  }, [firstName, lastName])
+  const fullName = `${firstName} ${lastName}`
+  const initials = getInitials(firstName, lastName)
+  const lastNameAnonymized = lastName
+    .split("")
+    .map((char, index) => (index < 2 ? char : "*"))
+    .join("")
 
   console.count("Page rendered")
 
@@ -73,6 +75,13 @@ export default function Page() {
           <div className="mt-6 space-y-4 text-center">
             <p className="text-lg font-semibold">
               Full Name: <span className="text-primary">{fullName}</span>
+            </p>
+
+            <p className="text-lg font-semibold">
+              Anonymized Name:{" "}
+              <span className="text-primary">
+                {firstName + " " + lastNameAnonymized}
+              </span>
             </p>
           </div>
         </CardContent>
