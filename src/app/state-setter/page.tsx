@@ -20,13 +20,13 @@ export default function Page() {
 
   const increment = () => {
     console.log("increment with count", count)
-    setCount(count + 1)
+    setCount((prev) => prev + 1)
   }
 
   const incrementAsync = async () => {
     console.log("incrementAsync with count", asyncCount)
     await performAsyncOperation()
-    setAsyncCount(asyncCount + 1)
+    setAsyncCount((prev) => prev + 1)
   }
 
   return (
