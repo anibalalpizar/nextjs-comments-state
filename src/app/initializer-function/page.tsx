@@ -16,11 +16,7 @@ export default function Page() {
   const [showDetails, setShowDetails] = useState(false)
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [data, setData] = useState(getInitialData())
-
-  // const initialData = getInitialData();
-
-  // const [data, setData] = useState(initalData);
+  const [data, setData] = useState(getInitialData)
 
   return (
     <div className="max-w-xl mx-auto p-4 space-y-8">
