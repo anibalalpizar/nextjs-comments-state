@@ -15,39 +15,47 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
+interface FormData {
+  firstName: string
+  lastName: string
+  email: string
+  street: string
+  city: string
+  zipCode: string
+}
+
+const initialStateFormData: FormData = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  street: "",
+  city: "",
+  zipCode: "",
+}
+
 export default function Page() {
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [email, setEmail] = useState("")
-  const [street, setStreet] = useState("")
-  const [city, setCity] = useState("")
-  const [zipCode, setZipCode] = useState("")
+  const [formData, setFormData] = useState<FormData>(initialStateFormData)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const formData = {
-      firstName,
-      lastName,
-      email,
-      street,
-      city,
-      zipCode,
-    }
     alert("Form submitted: " + JSON.stringify(formData, null, 2))
   }
 
   const handleReset = () => {
-    setFirstName("")
-    setLastName("")
-    setEmail("")
-    setStreet("")
-    setCity("")
-    setZipCode("")
+    setFormData(initialStateFormData)
   }
 
-  const isFormValid = [firstName, lastName, email, street, city, zipCode].every(
+  const isFormValid = Object.values(formData).every(
     (value) => value.trim() !== ""
   )
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }))
+  }
 
   return (
     <div className="max-w-2xl mx-auto p-4 space-y-8">
@@ -81,8 +89,8 @@ export default function Page() {
                 <Input
                   id="firstName"
                   name="firstName"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
+                  value={formData.firstName}
+                  onChange={handleChange}
                   placeholder="Enter first name"
                 />
               </div>
@@ -91,8 +99,8 @@ export default function Page() {
                 <Input
                   id="lastName"
                   name="lastName"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
+                  value={formData.lastName}
+                  onChange={handleChange}
                   placeholder="Enter last name"
                 />
               </div>
@@ -104,8 +112,8 @@ export default function Page() {
                 id="email"
                 name="email"
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formData.email}
+                onChange={handleChange}
                 placeholder="Enter email address"
               />
             </div>
@@ -115,8 +123,8 @@ export default function Page() {
               <Input
                 id="street"
                 name="street"
-                value={street}
-                onChange={(e) => setStreet(e.target.value)}
+                value={formData.street}
+                onChange={handleChange}
                 placeholder="Enter street address"
               />
             </div>
@@ -127,8 +135,8 @@ export default function Page() {
                 <Input
                   id="city"
                   name="city"
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
+                  value={formData.city}
+                  onChange={handleChange}
                   placeholder="Enter city"
                 />
               </div>
@@ -137,8 +145,8 @@ export default function Page() {
                 <Input
                   id="zipCode"
                   name="zipCode"
-                  value={zipCode}
-                  onChange={(e) => setZipCode(e.target.value)}
+                  value={formData.zipCode}
+                  onChange={handleChange}
                   placeholder="Enter zip code"
                 />
               </div>
@@ -167,12 +175,7 @@ export default function Page() {
           <pre className="p-4 bg-muted rounded-md overflow-x-auto">
             {JSON.stringify(
               {
-                firstName,
-                lastName,
-                email,
-                street,
-                city,
-                zipCode,
+                ...formData,
               },
               null,
               2
